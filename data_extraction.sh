@@ -15,7 +15,7 @@ question_28() {
 	sed -i 's/ST29Q01/EnjoyReading/g' $1
 	sed -i 's/ST29Q02/WorthwhileWork/g' $1
 	sed -i 's/ST29Q03/LookForwardLesson/g' $1
-	sed -i 's/ST29Q04/EnoyMath/g' $1
+	sed -i 's/ST29Q04/EnjoyMath/g' $1
 	sed -i 's/ST29Q05/CareerChances/g' $1
 	sed -i 's/ST29Q06/Interested/g' $1
 	sed -i 's/ST29Q07/FutureStudy/g' $1
@@ -60,7 +60,13 @@ rm truancy_2.csv
 rm skipclasses.csv
 sed -i 's/\t//g' truancy.csv
 
-
+sed -i 's/She did not complete /NotFinished/g' parents_luxuries.csv
+sed -i 's/He did not complete /NotFinished/g' parents_luxuries.csv
+sed -i 's/<ISCED level 1>/Primary/g' parents_luxuries.csv
+sed -i 's/<ISCED level 2>/Junior_secondary/g' parents_luxuries.csv
+sed -i 's/<ISCED level 2C>/Junior_vocational/g' parents_luxuries.csv
+sed -i 's/<ISCED level 3A>/General_secondary/g' parents_luxuries.csv
+sed -i 's/<ISCED level 3B, 3C>/Vocational/g' parents_luxuries.csv
 format parents_luxuries.csv parents_luxuries_2.csv
 rename_common parents_luxuries.csv
 parents_education parents_luxuries.csv
