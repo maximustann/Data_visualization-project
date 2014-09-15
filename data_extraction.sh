@@ -39,6 +39,16 @@ parents_education() {
 	sed -i 's/ST17Q01/FatherEducation/g' $1
 }
 
+education() {
+	sed -i 's/She did not complete /NotFinished/g' $1
+	sed -i 's/He did not complete /NotFinished/g' $1
+	sed -i 's/<ISCED level 1>/Primary/g' $1
+	sed -i 's/<ISCED level 2>/Junior_secondary/g' $1
+	sed -i 's/<ISCED level 2C>/Junior_vocational/g' $1
+	sed -i 's/<ISCED level 3A>/General_secondary/g' $1
+	sed -i 's/<ISCED level 3B, 3C>/Vocational/g' $1
+}
+
 sed -i 's/Yes, //g' truancy.csv
 sed -i 's/No, //g' truancy.csv
 format truancy.csv truancy_2.csv
@@ -60,13 +70,7 @@ rm truancy_2.csv
 rm skipclasses.csv
 sed -i 's/\t//g' truancy.csv
 
-sed -i 's/She did not complete /NotFinished/g' parents_luxuries.csv
-sed -i 's/He did not complete /NotFinished/g' parents_luxuries.csv
-sed -i 's/<ISCED level 1>/Primary/g' parents_luxuries.csv
-sed -i 's/<ISCED level 2>/Junior_secondary/g' parents_luxuries.csv
-sed -i 's/<ISCED level 2C>/Junior_vocational/g' parents_luxuries.csv
-sed -i 's/<ISCED level 3A>/General_secondary/g' parents_luxuries.csv
-sed -i 's/<ISCED level 3B, 3C>/Vocational/g' parents_luxuries.csv
+education parents_luxuries.csv
 format parents_luxuries.csv parents_luxuries_2.csv
 rename_common parents_luxuries.csv
 parents_education parents_luxuries.csv
@@ -82,13 +86,16 @@ format job_interest.csv job_interest_2.csv
 rename_common job_interest.csv
 question_28 job_interest.csv
 
+education parents_stu_math.csv
 format parents_stu_math.csv parents_stu_math_2.csv
 rename_common parents_stu_math.csv
 question_28 parents_stu_math.csv
 parents_opinion parents_stu_math.csv
 
+education parents_edu_att_math.csv
 format parents_edu_att_math.csv parents_edu_att_math_2.csv
 rename_common parents_edu_att_math.csv
+question_28 parents_edu_att_math.csv
 parents_opinion parents_edu_att_math.csv
 parents_education parents_edu_att_math.csv
 
