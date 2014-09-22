@@ -6,17 +6,24 @@
 		<script type="text/javascript" src="d3/d3.min.js"></script>
 		<script type="text/javascript" src="visualize.js"></script>
 		<style type="text/css">
-			/* No style rules here yet */		
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+
+			.axis text {
+				font-family: Droid-serif;
+				font-size: 11px;
+			}
 		</style>
 	</head>
 	<body>
 		<script type="text/javascript">
-			//Width and height
-			var width = 1000;
-			var height = 1000;
+			var width = 1500;
+			var height = 600;
 			
-
-
 	data_extract = function(data) {
 		dataset = new Array()
 		for(item in data){
@@ -24,6 +31,11 @@
 		}
 		return dataset
 	}
+	d3.csv("truancy_summary.csv", function(data) {
+		var dataset = data_extract(data[0])
+		visualize(dataset)
+	})
+
 		</script>
 	</body>
 </html>
