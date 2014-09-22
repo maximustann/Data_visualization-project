@@ -4,99 +4,57 @@
 		<meta charset="utf-8">
 		<title>D3: Smoother highlight transitions</title>
 		<script type="text/javascript" src="d3/d3.min.js"></script>
+		<script type="text/javascript" src="js/visualize.js"></script>
 		<style type="text/css">
-			/* No style rules here yet */		
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+
+			.axis text {
+				font-family: Droid-serif;
+				font-size: 11px;
+			}
+			.grid .tick {
+				stroke: lightgrey;
+				stroke-opacity: 0.7;
+				shape-rendering: crispEdges;
+			}
+			.grid .path {
+				stroke-width: 0;
+			}
 		</style>
 	</head>
 	<body>
 		<script type="text/javascript">
-			//Width and height
-			var w = 1000;
-			var h = 1000;
+			var width = 1000;
+			var height = 400;
+			var padding = 20;
 			
-			//var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-							//11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
-
-			
-			//Create SVG element
-			var svg = d3.select("body")
-						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
-
-			//Create bars
-
-		data_extract = function(data) {
-			dataset = new Array()
-			for(item in data) {
-				dataset.push(parseInt(data[item]))
-			}
-			return dataset
+	data_extract = function(data) {
+		dataset = new Array()
+		for(item in data){
+			dataset.push(parseInt(data[item]))
 		}
-		d3.csv("truancy_summary.csv", function(data) {
-			//console.log(data)
-			var dataset = data_extract(data[0])
-			console.log(dataset)
-			var yScale = d3.scale.linear()
-							.domain(d3.range(dataset.length))
-							.range([0, h], 0.05);
+		return dataset
+	}
+	key_extract = function(data) {
+		dataset = new Array()
+		for(item in data){
+			dataset.push(d3.format(item))
+		}
+		return dataset
+	}
+	d3.csv("data/truancy_summary.csv", function(data) {
+		
+		var dataset_skip = data_extract(data[0])
+		var dataset_fail = data_extract(data[1])
+		var dataset_key = key_extract(data[0])
+		visualize(dataset_skip, dataset_fail, dataset_key)
+	})
 
-			var xScale = d3.scale.ordinal()
-							.domain([0, d3.max(dataset)])
-							.rangeRoundBands([0, w]);
-
-				svg.selectAll("rect")
-			   .data(dataset)
-			   .enter()
-			   .append("rect")
-			   .attr("x", function(d) {
-			   		//return w - xScale(d);
-					return 0
-			   })
-			   .attr("y", function(d, i) {
-			   		//return yScale(i);
-					return i * 200
-			   })
-			   .attr("width", function(d) {
-						//console.log(d)
-						return xScale(d)
-				})
-			   .attr("height", 5)
-			   .attr("fill", function(d) {
-					return "rgb(0, 0, " + (d * 10) + ")";
-			   })
-			   .on("mouseover", function() {
-			   		d3.select(this)
-			   			.attr("fill", "orange");
-			   })
-			   .on("mouseout", function(d) {
-				   d3.select(this)
-				   		.transition()
-				   		.duration(250)
-						.attr("fill", "rgb(0, 0, " + (d * 10) + ")");
-			   });
-
-			//Create labels
-			   /*
-			svg.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			   		return d;
-			   })
-			   .attr("text-anchor", "middle")
-			   .attr("x", function(d, i) {
-			   		return xScale(i) + xScale.rangeBand() / 2;
-			   })
-			   .attr("y", function(d) {
-			   		return h - yScale(d) + 14;
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "white");
-			   */
-		})
 		</script>
 	</body>
 </html>
