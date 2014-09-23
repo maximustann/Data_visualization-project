@@ -75,8 +75,8 @@
 	d3.csv("data/truancy_summary.csv", function(data) {
 		var dataset_skip = data_extract(data[0])
 		var dataset_fail = data_extract(data[1])
-		var dataset_key = key_extract(data[0])
-		visualize(dataset_skip, dataset_fail, dataset_key)
+		var dataset_percent = data_extract(data[3])
+		visualize(dataset_skip, dataset_fail, dataset_percent)
 	})
 
 		</script>

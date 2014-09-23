@@ -1,4 +1,7 @@
-function visualize(dataset_skip, dataset_fail, dataset_key) {
+function visualize(dataset_skip, dataset_fail, dataset_percent) {
+	console.log(dataset_percent)
+	var percent = new Array()
+	percent = [100, 100, 100, 100]
 	function make_x_axis() {
 		return d3.svg.axis()
 				.scale(xScale)
@@ -105,14 +108,24 @@ function visualize(dataset_skip, dataset_fail, dataset_key) {
 				tip.hide()
 			})
 			.on("click", function(d){
-				var data = new Array()
-				data.push(d)
-				d3.selectAll("rect")
+				d3.select(".skip")
+				.selectAll("rect")
+				.data(percent)
+				//.attr("pointer-events", "none")
 				.transition()
 				.duration(2500)
 				.attr("width", function(d) {
-						console.log(data)
-					return xScale(data)
+					xScale.domain([0, 100])
+					return xScale(d)
+				})
+				d3.select(".fail")
+				.selectAll("rect")
+				.data(dataset_percent)
+				.transition()
+				.duration(2500)
+				.attr("width", function(d) {
+					xScale.domain([0, 100])
+					return xScale(d)
 				})
 			})
 		svg.append("g")
