@@ -5,15 +5,16 @@
 		<title>D3: Smoother highlight transitions</title>
 		<script type="text/javascript" src="d3/d3.min.js"></script>
 		<script type="text/javascript" src="js/visualize.js"></script>
+		<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 		<style type="text/css">
-			.axis path,
-			.axis line {
+			.axis_x, .axis_y path,
+			.axis_x, .axis_x line {
 				fill: none;
 				stroke: black;
 				shape-rendering: crispEdges;
 			}
 
-			.axis text {
+			.axis_x, .axis_y text {
 				font-family: Droid-serif;
 				font-size: 11px;
 			}
@@ -24,6 +25,30 @@
 			}
 			.grid .path {
 				stroke-width: 0;
+			}
+			.d3-tip {
+					line-height: 1px;
+					font-weight: bold;
+					padding: 12px;
+					background: rgba(0, 0, 0, 0.8);
+					color: #fff;
+					border-radius: 2px;
+			}
+			.d3-tip:after {
+					box-sizing: border-box;
+					display: inline;
+					font-size: 10px;
+					width: 100%;
+					line-height: 1;
+					color: rgba(0, 0, 0, 0.8);
+					content: "\25BC";
+					position: absolute;
+					text-align: center;
+			}
+			.d3-tip.n:after {
+					margin: -1px 0 0 0;
+					top: 100%;
+					left: 0;
 			}
 		</style>
 	</head>
@@ -48,7 +73,6 @@
 		return dataset
 	}
 	d3.csv("data/truancy_summary.csv", function(data) {
-		
 		var dataset_skip = data_extract(data[0])
 		var dataset_fail = data_extract(data[1])
 		var dataset_key = key_extract(data[0])

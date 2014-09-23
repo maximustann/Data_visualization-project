@@ -5,7 +5,11 @@ function visualize(dataset_skip, dataset_fail, dataset_key) {
 				.orient("bottom")
 				.ticks(5)
 	}
-
+/*
+	var zoom = d3.behavior.zoom()
+				.scaleExtent([1, 10])
+				.on("zoom", zoomed);
+*/
 	function make_y_axis() {
 		return d3.svg.axis()
 				.scale(yScale)
@@ -13,6 +17,12 @@ function visualize(dataset_skip, dataset_fail, dataset_key) {
 				.ticks(5)
 	}
 
+		var tip = d3.tip()
+					.attr("class", "d3-tip")
+					.offset([-10, 0])
+					.html(function(d) {
+						return "<span style='color:red'>" + "Hello" + "</span>"
+					})
 
 		var xScale = d3.scale.linear()
 					.domain([0, d3.max(dataset_skip)])
@@ -33,21 +43,27 @@ function visualize(dataset_skip, dataset_fail, dataset_key) {
 		var svg = d3.select("body").append("svg")
 					.attr("width", width)
 					.attr("height", height)
-
+					//.call(zoom);
+/*
+		function zoomed() {
+	  		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		}
+*/
+		svg.call(tip)
 		svg.append("g")
-			.attr("class", "axis")
+			.attr("class", "axis_x")
 			.attr("transform", "translate(" + padding + "," 
 					+ (height - padding) + ")")
 			.call(xAxis)
 
 		svg.append("g")
-			.attr("class", "axis")
+			.attr("class", "axis_y")
 			.attr("transform", "translate(" + padding + ", 0)")
 			.call(yAxis)
 
 		svg.append("g")
 			.attr("class", "grid")
-			.attr("transform", "translate(" + padding + height + ")")
+			.attr("transform", "translate(" + padding + "," + height + ")")
 			.call(make_x_axis()
 					.tickSize(-height, 0, 0)
 					.tickFormat(""))
@@ -79,12 +95,25 @@ function visualize(dataset_skip, dataset_fail, dataset_key) {
 					.transition()
 					.duration(250)
 					.attr("fill", "#666699")
+				tip.show()
 			})
 			.on("mouseout", function(d) {
 				d3.select(this)
 					.transition()
 					.duration(250)
 					.attr("fill", "#0099FF")
+				tip.hide()
+			})
+			.on("click", function(d){
+				var data = new Array()
+				data.push(d)
+				d3.selectAll("rect")
+				.transition()
+				.duration(2500)
+				.attr("width", function(d) {
+						console.log(data)
+					return xScale(data)
+				})
 			})
 		svg.append("g")
 			.attr("class", "fail")
@@ -107,12 +136,14 @@ function visualize(dataset_skip, dataset_fail, dataset_key) {
 					.transition()
 					.duration(250)
 					.attr("fill", "#E6E6B8")
+				tip.show()
 			})
 			.on("mouseout", function(d) {
 				d3.select(this)
 					.transition()
 					.duration(250)
 					.attr("fill", "#FFFFCC")
+				tip.hide()
 			})
 
 	}
