@@ -147,7 +147,7 @@ def counting(df):
             count_mother_secondary_books = _counting_books(df, i, count_mother_secondary_books)
             for flag in range(4):
                 count_mother_secondary[flag] = _counting_app(df, i,
-                                                count_father_secondary[flag], flag)
+                                                count_mother_secondary[flag], flag)
 
         if df.ix[i].ix["FatherEducation"] == edu_level[0]:
             count_father_not_dish = _counting_dish(df, i, count_father_not_dish)
