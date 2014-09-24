@@ -1,0 +1,74 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Developers</title>
+    
+      <link rel="stylesheet" type="text/css" href="https://google-developers.appspot.com/_static/07ff849f9c/css/screen-docs.css" />
+      <link rel="stylesheet" href="//www.google.com/cse/style/look/default.css" type="text/css" />
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400" type="text/css">
+      <script src="https://google-developers.appspot.com/_static/07ff849f9c/js/prettify-bundle.js"></script>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script id="jqueryui" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" defer async></script>
+    <script src="//www.google.com/jsapi?key=AIzaSyCZfHRnq7tigC-COeQRmoa9Cxr0vbrK6xw"></script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="https://google-developers.appspot.com/_static/07ff849f9c/js/framebox.js"></script>
+  </head>
+  <body class="docs slim framebox_body">
+    
+
+
+<div id="barformat_div">BarFormat Example</div>
+
+<script src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.0','packages':['table, charteditor']}]}"></script>
+<script src="../d3/d3.min.js"></script>
+<script src="js/data_extract.js"></script>
+
+<script type="text/javascript">
+
+d3.csv("data/summary.csv", function(data) {
+var dataset = construct(data)
+drawBarFormatTable(dataset)
+function drawBarFormatTable(dataset) {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Attitudes');
+  data.addColumn('number', 'Negative');
+  data.addColumn('number', 'Positive');
+  data.addRows(dataset);
+/*
+  data.addRows([
+    ['Shoes', -999, 10700],
+    ['Sports', -15400, 9998],
+    ['Toys', -80, 12500],
+    ['Electronics', -2100, 765],
+    ['Food', -23, 22600],
+    ['Art', -8787, 1100]
+  ]);
+  */
+  var table = new google.visualization.Table(document.getElementById('barformat_div'));
+  var formatter = new google.visualization.BarFormat({width: 120});
+  formatter.format(data, 1); // Apply formatter to second column
+  formatter.format(data, 2); // Apply formatter to second column
+  table.draw(data, {allowHtml: true, showRowNumber: true});
+}
+google.setOnLoadCallback(drawBarFormatTable);
+
+})
+</script>
+
+
+    <script>
+      
+      devsite.github.Link.convertAnchors();
+      
+        window.prettyPrint();
+      
+      
+    </script>
+  </body>
+</html>
+
