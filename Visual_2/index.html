@@ -8,8 +8,15 @@ text {
 
 </style>
 <body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../d3/d3.min.js"></script>
+	<select onchange="display(value)">
+		<option id="choose" value="0">Mother</option>
+		<option id="choose" value="1">Father</option>
+	</select>
 <script>
+
+
+
 
 var diameter = 960,
 	format = d3.format(",d"),
@@ -24,8 +31,19 @@ var diameter = 960,
 		.attr("width", diameter)
 		.attr("height", diameter)
 		.attr("class", "bubble");
+	
 
-		d3.json("flare.json", function(error, root) {
+	display("0")
+	function display(select){
+		var filename;
+		switch(select){
+		case "0": filename = "./data/mother.json";break;
+		case "1": filename = "./data/father.json";break;
+		default: filename = "./data/mother.json";break;
+		}
+		d3.json(filename, function(error, root) {
+					svg.selectAll(".node")
+						.remove()
 						var node = svg.selectAll(".node")
 						.data(bubble.nodes(classes(root))
 								.filter(function(d) { return !d.children; }))
@@ -60,5 +78,5 @@ function classes(root) {
 }
 
 d3.select(self.frameElement).style("height", diameter + "px");
-
+}
 </script>
