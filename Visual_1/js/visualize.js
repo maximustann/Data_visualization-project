@@ -1,12 +1,16 @@
-function visualize(dataset_skip, dataset_fail, dataset_percent) {
-	console.log(dataset_percent)
+function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
+	svg.selectAll("g")
+			.remove()
+	d3.selectAll(".d3-tip")
+			.remove()
+	var flag = 0
 	var percent = new Array()
 	percent = [100, 100, 100, 100]
-	function make_x_axis() {
+	function make_x_axis(tick_number) {
 		return d3.svg.axis()
 				.scale(xScale)
 				.orient("bottom")
-				.ticks(5)
+				.ticks(tick_number)
 	}
 /*
 	var zoom = d3.behavior.zoom()
@@ -24,7 +28,7 @@ function visualize(dataset_skip, dataset_fail, dataset_percent) {
 					.attr("class", "d3-tip")
 					.offset([-10, 0])
 					.html(function(d) {
-						return "<span style='color:red'>" + "Hello" + "</span>"
+						return "<span style='color:red'>" + d + "</span>"
 					})
 
 		var xScale = d3.scale.linear()
@@ -43,9 +47,6 @@ function visualize(dataset_skip, dataset_fail, dataset_percent) {
 					.scale(yScale)
 					.orient("left")
 
-		var svg = d3.select("body").append("svg")
-					.attr("width", width)
-					.attr("height", height)
 					//.call(zoom);
 /*
 		function zoomed() {
@@ -65,9 +66,9 @@ function visualize(dataset_skip, dataset_fail, dataset_percent) {
 			.call(yAxis)
 
 		svg.append("g")
-			.attr("class", "grid")
+			.attr("class", "grid_x")
 			.attr("transform", "translate(" + padding + "," + height + ")")
-			.call(make_x_axis()
+			.call(make_x_axis(6)
 					.tickSize(-height, 0, 0)
 					.tickFormat(""))
 
@@ -98,7 +99,8 @@ function visualize(dataset_skip, dataset_fail, dataset_percent) {
 					.transition()
 					.duration(250)
 					.attr("fill", "#666699")
-				tip.show()
+				tip.html(d)
+					.show()
 			})
 			.on("mouseout", function(d) {
 				d3.select(this)
@@ -108,25 +110,63 @@ function visualize(dataset_skip, dataset_fail, dataset_percent) {
 				tip.hide()
 			})
 			.on("click", function(d){
-				d3.select(".skip")
-				.selectAll("rect")
-				.data(percent)
-				//.attr("pointer-events", "none")
-				.transition()
-				.duration(2500)
-				.attr("width", function(d) {
-					xScale.domain([0, 100])
-					return xScale(d)
-				})
-				d3.select(".fail")
-				.selectAll("rect")
-				.data(dataset_percent)
-				.transition()
-				.duration(2500)
-				.attr("width", function(d) {
-					xScale.domain([0, 100])
-					return xScale(d)
-				})
+				if(flag == 0)
+				{
+					d3.select(".skip")
+					.selectAll("rect")
+					.data(percent)
+					//.attr("pointer-events", "none")
+					.transition()
+					.duration(2500)
+					.attr("width", function(d) {
+						xScale.domain([0, 100])
+						return xScale(d)
+					})
+					d3.select(".fail")
+					.selectAll("rect")
+					.data(dataset_percent)
+					.transition()
+					.duration(2500)
+					.attr("width", function(d) {
+						xScale.domain([0, 100])
+						return xScale(d)
+					})
+					svg.selectAll("g.axis_x")
+							.call(xAxis.scale(xScale.domain([0, 100])))
+					svg.selectAll("g.grid_x")
+							.call(make_x_axis(10)
+							.tickSize(-height, 0, 0)
+							.tickFormat(""))
+					flag += 1
+				}
+				else {
+					d3.select(".skip")
+					.selectAll("rect")
+					.data(dataset_skip)
+					//.attr("pointer-events", "none")
+					.transition()
+					.duration(2500)
+					.attr("width", function(d) {
+						xScale.domain([0, d3.max(dataset_skip)])
+						return xScale(d)
+					})
+					d3.select(".fail")
+					.selectAll("rect")
+					.data(dataset_fail)
+					.transition()
+					.duration(2500)
+					.attr("width", function(d) {
+						xScale.domain([0, d3.max(dataset_skip)])
+						return xScale(d)
+					})
+					svg.selectAll("g.axis_x")
+							.call(xAxis.scale(xScale.domain([0, d3.max(dataset_skip)])))
+					svg.selectAll("g.grid_x")
+							.call(make_x_axis(6)
+							.tickSize(-height, 0, 0)
+							.tickFormat(""))
+					flag -= 1
+				}
 			})
 		svg.append("g")
 			.attr("class", "fail")
@@ -142,23 +182,39 @@ function visualize(dataset_skip, dataset_fail, dataset_percent) {
 					return xScale(d);
 					})
 			.attr("height", 50)
-			.attr("fill", "#FFFFCC")
+			.attr("fill", "#FF0066")
 			.attr("transform", "translate(" + padding + ", 0)")
 			.on("mouseover", function(d) {
 				d3.select(this)
 					.transition()
 					.duration(250)
-					.attr("fill", "#E6E6B8")
-				tip.show()
+					.attr("fill", "#CC0052")
+				tip.html(d)
+					.show()
 			})
 			.on("mouseout", function(d) {
 				d3.select(this)
 					.transition()
 					.duration(250)
-					.attr("fill", "#FFFFCC")
+					.attr("fill", "#FF0066")
 				tip.hide()
 			})
-
+		svg.append("g")
+			.attr("class", "Label")
+			.selectAll("text")
+			.data(dataset_key)
+			.enter()
+			.append("text")
+			.attr("font-size", "15")
+			.attr("font-family", "Droid-serif")
+			.attr("font-weight", "bold")
+			.attr("x", width / 2)
+			.attr("y", function(d, i) {
+				return i * 100 + 25
+			})
+			.text(function(d) {
+				return d
+			})
 	}
 
 

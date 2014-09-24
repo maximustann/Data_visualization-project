@@ -18,7 +18,7 @@
 				font-family: Droid-serif;
 				font-size: 11px;
 			}
-			.grid .tick {
+			.grid, .grid_x .tick {
 				stroke: lightgrey;
 				stroke-opacity: 0.7;
 				shape-rendering: crispEdges;
@@ -50,16 +50,41 @@
 					top: 100%;
 					left: 0;
 			}
+		select {
+			font-size: 15px;
+			font-family: ubuntu;
+			border: 0;
+			-webkit-appearance: none;
+			-moz-appearance:none;
+			background: #0088cc url(Images/arrow.png) no-repeat 90% center;
+			width: 100px;
+			text-indent: 0.01px;
+			text-overflow: "";
+
+			color: #FFF;
+			border-radius: 15px;
+			padding:5px;
+			box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5)
+
+		}
 		</style>
 	</head>
 	<body>
+		<select onchange="display(value)">
+			<option id="choose" value="0">Skip Whole Day</option>
+			<option id="choose" value="1">Skip Class</option>
+			<option id="choose" value="2">Late</option>
+		</select>
 		<script type="text/javascript">
 			var width = 1000;
 			var height = 400;
 			var padding = 20;
-			
+			var svg = d3.select("body").append("svg")
+			.attr("width", width)
+			.attr("height", height)
+
 	data_extract = function(data) {
-		dataset = new Array()
+		var dataset = new Array()
 		for(item in data){
 			dataset.push(parseInt(data[item]))
 		}
@@ -68,16 +93,29 @@
 	key_extract = function(data) {
 		dataset = new Array()
 		for(item in data){
-			dataset.push(d3.format(item))
+			dataset.push(item)
 		}
 		return dataset
 	}
-	d3.csv("data/truancy_summary.csv", function(data) {
-		var dataset_skip = data_extract(data[0])
-		var dataset_fail = data_extract(data[1])
-		var dataset_percent = data_extract(data[3])
-		visualize(dataset_skip, dataset_fail, dataset_percent)
-	})
+
+	display(0);
+
+	function display(select){
+		var filename;
+		switch(select){
+			case "0": filename = "data/truancy_summary.csv"; break;
+			case "1": filename = "data/skip_class.csv"; break;
+			case "2": filename = "data/late.csv"; break;
+			default: filename = "data/truancy_summary.csv"; break;
+		}
+		d3.csv(filename, function(data) {
+			var dataset_key = key_extract(data[0])
+			var dataset_skip = data_extract(data[0])
+			var dataset_fail = data_extract(data[1])
+			var dataset_percent = data_extract(data[2])
+			visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key)
+		})
+	}
 
 		</script>
 	</body>
