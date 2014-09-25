@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<link href="c3/c3.css" rel="stylesheet" type="text/css">
+	<script src="../d3/d3.min.js"></script>
+	<script src="c3/c3.min.js"></script>
+	<script src="js/data_extract.js"></script>
+	<style>
+		select {
+			font-size: 15px;
+			font-family: ubuntu;
+			border: 0;
+			-webkit-appearance: none;
+			-moz-appearance:none;
+			background: #0088cc url(Images/arrow.png) no-repeat 90% center;
+			width: 100px;
+			text-indent: 0.01px;
+			text-overflow: "";
+
+			color: #FFF;
+			border-radius: 15px;
+			padding:5px;
+			box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5)
+		}
+	</style>
+	</head>
+	<body>
+	<select onchange="display(value)">
+		<option value="0">Mother</option>
+		<option value="1">Father</option>
+	</select>
+	<div id="chart"></div>
+		<script>
+		display(0)
+		function display(value){
+			var filename = "data/parents.csv";
+			d3.csv(filename, function(data) {
+				mother = extract(data)[0];
+				father = extract(data)[1];
+			if(value == 1)
+			{
+				var chart = c3.generate({
+				data: {
+					columns: father,
+					axes: {
+						father_number: 'y',
+						father_think_positive: 'y2',
+						father_think_negative: 'y2'
+					},
+					type: 'bar',
+					colors: {
+						father_number: '#CCCCCC',
+						father_think_positive: '#FF6666',
+						father_think_negative: '#0099CC'
+					},
+					types: {
+						father_number: 'line'
+					},
+	
+					groups: [
+						['father_think_positive', 'father_think_negative']
+					]
+				},
+				axis: {
+					x: {
+						type: 'category',
+						categories: ['Not Finished Primary', 'Primary', 'Junior', 'Vocational', 'General']
+					},
+					y2: {
+							show: true
+						}
+				}
+			});
+		}
+		else if(value == 0){
+				var chart = c3.generate({
+				data: {
+					columns: mother,
+					axes: {
+						mother_number: 'y',
+						mother_think_positive: 'y2',
+						mother_think_negative: 'y2'
+					},
+					type: 'bar',
+					colors: {
+						mother_number: '#CCCCCC',
+						mother_think_positive: '#FF6666',
+						mother_think_negative: '#0099CC'
+					},
+					types: {
+						mother_number: 'line'
+					},
+	
+					groups: [
+						['mother_think_positive', 'mother_think_negative']
+					]
+				},
+				axis: {
+					x: {
+						type: 'category',
+						categories: ['Not Finished Primary', 'Primary', 'Junior', 'Vocational', 'General']
+					},
+					y2: {
+							show: true
+						}
+				}
+			});	
+		}
+	})
+}
+		</script>
+	</body>
+</html>
