@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<link href="c3/c3.css" rel="stylesheet" type="text/css">
+	<script src="../d3/d3.min.js"></script>
+	<script src="c3/c3.min.js"></script>
+	<script src="js/data_extract.js"></script>
+	<style>
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+	</style>
+	</head>
+	<body>
+	<div id="chart"></div>
+		<script>
+	var filename = "data/parents.csv";
+	d3.csv(filename, function(data) {
+		mother = extract(data)[0];
+		father = extract(data)[1];
+
+		console.log(mother)
+	var chart = c3.generate({
+    data: {
+	/*
+	        columns: [
+	            ['data1', 30, 200, 100, 400, 150],
+	            ['data2', 130, 340, 200, 500, 250]
+	        ],
+	*/
+			columns: mother,
+			type: 'bar',
+			types: {
+				mother_line: 'line'
+			},
+			groups: [
+				['mother_negative', 'mother_positive']
+			]
+	    },
+	    axis: {
+	        x: {
+	            type: 'category',
+				categories: ['Not Finished Primary', 'Primary', 'Junior', 'Vocational', 'General']
+	        }
+	    }
+	});
+})
+		</script>
+	</body>
+</html>
