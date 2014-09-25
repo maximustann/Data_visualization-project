@@ -1,0 +1,55 @@
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Negative Positive Bar</title>
+    
+    
+	<link href="../nov/nv.d3.css" rel="stylesheet" type="text/css">
+	<script src="../d3/d3.min.js"></script>
+	<script src="../nov/nv.d3.js"></script>
+  </head>
+  <body class="docs slim framebox_body">
+    
+
+
+<div id='chart1'>
+		<script>
+			var width = 1000
+			var height = 1000
+			var svg = d3.select("#chart1").append("svg")
+				.attr("width", width)
+				.attr("height", height)
+		</script>
+	</div>
+
+<script type="text/javascript">
+d3.json('data/summary.json', function(data) {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarHorizontalChart()
+        .x(function(d) { return d.label })
+        .y(function(d) { return d.value })
+        .margin({top: 30, right: 20, bottom: 50, left: 275})
+        .showValues(true)           //Show bar value next to each bar.
+        .tooltips(true)             //Show tooltips on hover.
+        .transitionDuration(350)
+        .showControls(true);        //Allow user to switch between "Grouped" and "Stacked" mode.
+
+    chart.yAxis
+        .tickFormat(d3.format(',.2f'));
+
+    d3.select('#chart1 svg')
+        .datum(data)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+});
+
+</script>
+  </body>
+</html>
+
