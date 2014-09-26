@@ -1,0 +1,18 @@
+function pack(raw){
+	var dataset = [
+			["Enjoy Reading"],
+			["Worthwhile Work"],
+			["Look Forward Lesson"],
+			["Enjoy Math"],
+			["Career Chance"],
+			["Interested"],
+			["Future Study"],
+			["GetJob"]
+			]
+	for(var i = 0; i < raw.length; ++i){
+		dataset[i].push(raw[i]["male"]);
+		dataset[i].push(raw[i]["female"]);
+	}
+	console.log(dataset)
+	return dataset;
+}
