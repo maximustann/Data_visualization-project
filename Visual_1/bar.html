@@ -52,12 +52,12 @@
 			}
 		select {
 			font-size: 15px;
-			font-family: ubuntu;
+			font-family: Droid;
 			border: 0;
 			-webkit-appearance: none;
 			-moz-appearance:none;
 			background: #0088cc url(Images/arrow.png) no-repeat 90% center;
-			width: 100px;
+			width: 150px;
 			text-indent: 0.01px;
 			text-overflow: "";
 
@@ -67,21 +67,52 @@
 			box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5)
 
 		}
+		p {
+			margin-left:20px;
+		}
 		</style>
+		<script>
+			var countries = ["Israel", "Shanghai-China", "Mexico", "Sweden", "New_Zealand", "Tunisia"]
+		</script>
 	</head>
 	<body>
-		<select onchange="display(value)">
+		<select onchange="select_type(value)" id='type'>
 			<option id="choose" value="0">Skip Whole Day</option>
 			<option id="choose" value="1">Skip Class</option>
 			<option id="choose" value="2">Late</option>
 		</select>
+		<select onchange="select_country(value)" id="country">
+			<script>
+				var select = document.getElementById('country')
+				for(var i = 0; i <= countries.length - 1; ++i){
+					var option = document.createElement("option")
+					option.value = countries[i]
+					option.innerHTML = countries[i]
+					select.appendChild(option)
+				}
+				
+				function select_country(value){
+					document.getElementById("selected_country")
+					.innerHTML = value
+					var type_select = document.getElementById('type')
+					var type_choice = type.options[select.selectedIndex]
+					display(type_choice, value)
+				}
+			</script>
+		</select>
+		<div>
+			<h1><p id="selected_country">Israel</p></h1>
+		</div>
+		<div id="canvas"></div>
 		<script type="text/javascript">
-			var width = 1000;
-			var height = 400;
-			var padding = 20;
-			var svg = d3.select("body").append("svg")
-			.attr("width", width)
-			.attr("height", height)
+			var width = 1000,
+				height = 500,
+				padding = 20,
+				top_padding = 50;
+			var svg = d3.select("div#canvas").append("svg")
+				.attr("width", width)
+				.attr("height", height)
+
 
 	data_extract = function(data) {
 		var dataset = new Array()
@@ -98,15 +129,22 @@
 		return dataset
 	}
 
-	display(0);
+	function select_type(value){
+		var select = document.getElementById('country')
+		var select_country = select.options[select.selectedIndex].innerText
+		display(value, select_country)
+	}
 
-	function display(select){
+
+	display(0, "Israel");
+	
+	function display(select, selected_country){
 		var filename;
 		switch(select){
-			case "0": filename = "data/truancy_summary.csv"; break;
-			case "1": filename = "data/skip_class.csv"; break;
-			case "2": filename = "data/late.csv"; break;
-			default: filename = "data/truancy_summary.csv"; break;
+			case "0": filename = "data/" + selected_country + "/truancy_summary.csv"; break;
+			case "1": filename = "data/" + selected_country + "/skip_class.csv"; break;
+			case "2": filename = "data/" + selected_country + "/late.csv"; break;
+			default: filename = "data/" + selected_country + "/truancy_summary.csv";
 		}
 		d3.csv(filename, function(data) {
 			var dataset_key = key_extract(data[0])
