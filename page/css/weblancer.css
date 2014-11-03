@@ -1,0 +1,16 @@
+#zuo {
+	margin-left:auto;
+	margin-right:auto;
+	width:70%;	
+}
+
+#wowslider-you {
+    background-image: url("./rightnormal.png");
+    display: block;
+    height: 30px;
+    margin-top: -15px;
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    z-index: 1001;
+}

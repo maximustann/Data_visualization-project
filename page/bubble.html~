@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<!--
+	Phase Shift by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>No Sidebar - Phase Shift by TEMPLATED</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.dropotron.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-wide.css" />
+		</noscript>
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div class="wrapper style1">
+
+				<!-- Header -->
+					<div id="header" class="skel-panels-fixed">
+						<div id="logo">
+							<h1><a href="index.html">VISUALIZATION PROJECT</a></h1>
+							<span class="tag" style="color:white">by Boxiong Tan</span>
+						</div>
+						<nav id="nav">
+							<ul>
+								<li class="active"><a href="index.html">Homepage</a></li>
+							</ul>
+						</nav>
+					</div>
+				<!-- Header -->
+
+				<!-- Page -->
+					<div id="page" class="container">
+						<section>
+							<header class="major">
+								<h2>Parents' education level and the number of luxuries in their home</h2>
+								<span class="byline" style="text-transform:none">The size of the bubble represent the number of luxuries.</span>
+								<div>
+									<iframe src="../Visual_2/index.html" frameborder=0 height="1800" width=1500 seamless=seamless scrolling="no" style="height:1080px"></iframe>
+								</div>
+							</header>
+						</section>
+					</div>
+				<!-- /Page -->
+
+	</div>
+
+	</body>
+</html>

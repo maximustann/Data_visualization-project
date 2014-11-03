@@ -2,9 +2,9 @@
 <html>
 	<head>
 	<meta charset="utf-8">
-	<link href="c3/c3.css" rel="stylesheet" type="text/css">
+	<link href="../c3/c3.css" rel="stylesheet" type="text/css">
 	<script src="../d3/d3.min.js"></script>
-	<script src="c3/c3.min.js"></script>
+	<script src="../c3/c3.min.js"></script>
 	<script src="js/data_extract.js"></script>
 	<style>
 		select {
@@ -14,7 +14,7 @@
 			-webkit-appearance: none;
 			-moz-appearance:none;
 			background: #0088cc url(Images/arrow.png) no-repeat 90% center;
-			width: 100px;
+			width: 150px;
 			text-indent: 0.01px;
 			text-overflow: "";
 
@@ -24,21 +24,56 @@
 			box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5)
 		}
 	</style>
+	<script>
+		var countries = ["Israel", "Shanghai-China", "Mexico", "Finland", "Australia", "Tunisia"]
+	</script>
 	</head>
 	<body>
-	<select onchange="display(value)">
-		<option value="0">Mother</option>
+	<select onchange="select_type(value)" id="type">
+		<option value="0" selected="selected">Mother</option>
 		<option value="1">Father</option>
 	</select>
+	<select onchange="select_country(value)" id="country">
+		<script>
+			var select = document.getElementById('country')
+			for(var i = 0; i <= countries.length - 1; ++i){
+				var option = document.createElement("option")
+				option.value = countries[i]
+				option.innerHTML = countries[i]
+				select.appendChild(option)
+			}
+			document.getElementById('country').options[1].selected = true
+			
+			function select_country(value){
+				document.getElementById("selected_country")
+				.innerHTML = value
+				var type_select = document.getElementById('type')
+				var type_choice = type.options[type_select.selectedIndex]
+				display(type_choice.value, value)
+			}
+	</script>
+	</select>
+		<div>
+			<h1><p id="selected_country">Shanghai-China</p></h1>
+		</div>
+
 	<div id="chart"></div>
 		<script>
-		display(0)
-		function display(value){
-			var filename = "data/parents.csv";
+
+	function select_type(value){
+		var select = document.getElementById('country')
+		var select_country = select.options[select.selectedIndex].innerText
+		console.log(value)
+		display(value, select_country)
+	}
+
+	display(0, "Shanghai-China")
+		function display(type, country){
+			var filename = "data/" + country + "/parents.csv";
 			d3.csv(filename, function(data) {
 				mother = extract(data)[0];
 				father = extract(data)[1];
-			if(value == 1)
+			if(type == 1)
 			{
 				var chart = c3.generate({
 				data: {
@@ -50,7 +85,7 @@
 					},
 					type: 'bar',
 					colors: {
-						father_number: '#CCCCCC',
+						father_number: '#000000',
 						father_think_positive: '#FF6666',
 						father_think_negative: '#0099CC'
 					},
@@ -73,7 +108,7 @@
 				}
 			});
 		}
-		else if(value == 0){
+		else if(type == 0){
 				var chart = c3.generate({
 				data: {
 					columns: mother,
@@ -84,7 +119,7 @@
 					},
 					type: 'bar',
 					colors: {
-						mother_number: '#CCCCCC',
+						mother_number: '#000000',
 						mother_think_positive: '#FF6666',
 						mother_think_negative: '#0099CC'
 					},

@@ -39,6 +39,7 @@ function extract(filename){
 		dataset_mother[2].push(negative(filename[i]));
 		dataset_father[2].push(negative(filename[i + 1]));
 	}
+	/*console.log(dataset_mother)*/
 	dataset.push(dataset_mother);
 	dataset.push(dataset_father);
 	return dataset;

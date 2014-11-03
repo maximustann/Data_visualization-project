@@ -17,11 +17,10 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 				.scaleExtent([1, 10])
 				.on("zoom", zoomed);
 */
-	function make_y_axis() {
+	function make_y_axis(tick_number) {
 		return d3.svg.axis()
-				.scale(yScale)
+				.scale(yScale.domain(d3.range(tick_number)))
 				.orient("left")
-				.ticks(5)
 	}
 
 		var tip = d3.tip()
@@ -46,7 +45,6 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 		var yAxis = d3.svg.axis()
 					.scale(yScale)
 					.orient("left")
-
 					//.call(zoom);
 /*
 		function zoomed() {
@@ -60,10 +58,10 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 					+ (height - padding) + ")")
 			.call(xAxis)
 
-		svg.append("g")
-			.attr("class", "axis_y")
-			.attr("transform", "translate(" + padding + ", 0)")
-			.call(yAxis)
+			/*svg.append("g")*/
+			/*.attr("class", "axis_y")*/
+			/*.attr("transform", "translate(" + padding + "," + -padding + ")")*/
+			/*.call(yAxis)*/
 
 		svg.append("g")
 			.attr("class", "grid_x")
@@ -74,7 +72,8 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 
 		svg.append("g")
 			.attr("class", "grid")
-			.call(make_y_axis()
+			.attr("transform", "translate(" + padding + "," + top_padding + ")")
+			.call(make_y_axis(15)
 					.tickSize(-width, 0, 0)
 					.tickFormat(""))
 
@@ -93,7 +92,7 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 					})
 			.attr("height", 50)
 			.attr("fill", "#0099FF")
-			.attr("transform", "translate(" + padding + ", 0)")
+			.attr("transform", "translate(" + padding + "," + top_padding + ")")
 			.on("mouseover", function(d) {
 				d3.select(this)
 					.transition()
@@ -183,7 +182,7 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 					})
 			.attr("height", 50)
 			.attr("fill", "#FF0066")
-			.attr("transform", "translate(" + padding + ", 0)")
+			.attr("transform", "translate(" + padding + "," + top_padding + ")")
 			.on("mouseover", function(d) {
 				d3.select(this)
 					.transition()
@@ -205,6 +204,7 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 			.data(dataset_key)
 			.enter()
 			.append("text")
+			.attr("transform", "translate(" + padding + "," + top_padding + ")")
 			.attr("font-size", "15")
 			.attr("font-family", "Droid-serif")
 			.attr("font-weight", "bold")
@@ -213,7 +213,7 @@ function visualize(dataset_skip, dataset_fail, dataset_percent, dataset_key) {
 				return i * 100 + 25
 			})
 			.text(function(d) {
-				return d
+				return d 
 			})
 	}
 

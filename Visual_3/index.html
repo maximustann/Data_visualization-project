@@ -17,15 +17,63 @@
 		  position: absolute;
 		  top: 50px;
 		  left: 100px;
-		}	
+		}		
+		select {
+			font-size: 15px;
+			font-family: Droid;
+			border: 0;
+			-webkit-appearance: none;
+			-moz-appearance:none;
+			background: #0088cc url(Images/arrow.png) no-repeat 90% center;
+			width: 150px;
+			text-indent: 0.01px;
+			text-overflow: "";
+
+			color: #FFF;
+			border-radius: 15px;
+			padding:5px;
+			box-shadow: inset 0 0 5px rgba(000, 000, 000, 0.5)
+
+		}
+		p {
+			margin-left:20px;
+		}
+
 	</style>
   </head>
+	<script>
+		var countries = ["Israel", "Shanghai-China", "Mexico", "Sweden", "New_Zealand", "Tunisia"]
+	</script>
+		<select onchange="select_country(value)" id="country">
+			<script>
+				var select = document.getElementById('country')
+				for(var i = 0; i <= countries.length - 1; ++i){
+					var option = document.createElement("option")
+					option.value = countries[i]
+					option.innerHTML = countries[i]
+					select.appendChild(option)
+				}
+				document.getElementById('country').options[1].selected = true
+				
+				function select_country(value){
+					document.getElementById("selected_country")
+					.innerHTML = value
+					display(value)
+				}
+			</script>
+		</select>
+
   <body>
+	<div>
+		<h1><p id="selected_country">Shanghai-China</p></h1>
+	</div>
     <div id="body">
 	  <div id="chart"></div>
     </div>
 	
     <script type="text/javascript" src="js/script.js"></script>
-
+	<script>
+		display("Shanghai-China")
+	</script>
   </body>
 </html>

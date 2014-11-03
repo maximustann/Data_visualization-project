@@ -1,0 +1,61 @@
+#!/bin/bash
+
+format() {
+	cat $1 | cut -d"," -f2- > $2
+	sed -i 's/"//g' $2
+	sed -i 's/ //g' $2
+	mv $2 $1
+}
+rename_common() {
+	sed -i 's/ST03Q02/BirthYear/g' $1
+	sed -i 's/ST04Q01/Gender/g' $1
+}
+
+question_28() {
+	sed -i 's/ST29Q01/EnjoyReading/g' $1
+	sed -i 's/ST29Q02/WorthwhileWork/g' $1
+	sed -i 's/ST29Q03/LookForwardLesson/g' $1
+	sed -i 's/ST29Q04/EnjoyMath/g' $1
+	sed -i 's/ST29Q05/CareerChances/g' $1
+	sed -i 's/ST29Q06/Interested/g' $1
+	sed -i 's/ST29Q07/FutureStudy/g' $1
+	sed -i 's/ST29Q08/GetJob/g' $1
+}
+
+parents_opinion() {
+	sed -i 's/ST35Q04/ParentsBelieveImportant/g' $1
+	sed -i 's/ST35Q05/ParentsBelieveCareer/g' $1
+	sed -i 's/ST35Q06/ParentsLikeMath/g' $1
+}
+
+repeat_grade() {
+	sed -i 's/ST07Q01/Repeat01/g' $1
+	sed -i 's/ST07Q02/Repeat02/g' $1
+	sed -i 's/ST07Q03/Repeat03/g' $1
+}
+
+parents_education() {
+	sed -i 's/ST13Q01/MotherEducation/g' $1
+	sed -i 's/ST17Q01/FatherEducation/g' $1
+}
+
+
+sed -i 's/She did not complete /NotFinished/g' parents_luxuries.csv
+sed -i 's/He did not complete /NotFinished/g' parents_luxuries.csv
+sed -i 's/<ISCED level 1>/Primary/g' parents_luxuries.csv
+sed -i 's/<ISCED level 2>/Junior_secondary/g' parents_luxuries.csv
+sed -i 's/<ISCED level 2C>/Junior_vocational/g' parents_luxuries.csv
+sed -i 's/<ISCED level 3A>/General_secondary/g' parents_luxuries.csv
+sed -i 's/<ISCED level 3B, 3C>/Vocational/g' parents_luxuries.csv
+format parents_luxuries.csv parents_luxuries_2.csv
+rename_common parents_luxuries.csv
+parents_education parents_luxuries.csv
+sed -i 's/books//g' parents_luxuries.csv
+sed -i 's/ST26Q13/Dishwasher/g' parents_luxuries.csv
+sed -i 's/ST27Q02/Tv/g' parents_luxuries.csv
+sed -i 's/ST27Q03/Computers/g' parents_luxuries.csv
+sed -i 's/ST27Q04/Cars/g' parents_luxuries.csv
+sed -i 's/ST27Q05/Showers/g' parents_luxuries.csv
+sed -i 's/ST28Q01/Books/g' parents_luxuries.csv
+
+
