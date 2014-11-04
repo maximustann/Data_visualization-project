@@ -4,24 +4,24 @@ var w = 500,
 function extract(data){
 	d = [
 			[
-				{axis:"Enjoy Reading", value:parseFloat(data[0].male) / (parseFloat(data[0].female) + parseFloat(data[0].male))},
-				{axis:"Worthwhlie Work", value:parseFloat(data[1].male) / (parseFloat(data[1].female) + parseFloat(data[1].male))},
-				{axis:"Look Forward", value:parseFloat(data[2].male) / (parseFloat(data[2].female) + parseFloat(data[2].male))},
-				{axis:"Enjoy Math", value:parseFloat(data[3].male) / (parseFloat(data[3].female) + parseFloat(data[3].male))},
-				{axis:"Career Chance", value:parseFloat(data[4].male) / (parseFloat(data[4].female) + parseFloat(data[4].male))},
-				{axis:"Interested", value:parseFloat(data[5].male) / (parseFloat(data[5].female) + parseFloat(data[5].male))},
-				{axis:"Future Study", value:parseFloat(data[6].male) / (parseFloat(data[6].female) + parseFloat(data[6].male))},
-				{axis:"Get Job", value:parseFloat(data[7].male) / (parseFloat(data[7].female) + parseFloat(data[7].male))}
+				{axis:"Enjoy Reading", value:parseFloat(data[0].male) / parseFloat(data[8].male)},
+				{axis:"Worthwhlie Work", value:parseFloat(data[1].male) / parseFloat(data[8].male)},
+				{axis:"Look Forward", value:parseFloat(data[2].male) / parseFloat(data[8].male)},
+				{axis:"Enjoy Math", value:parseFloat(data[3].male) / parseFloat(data[8].male)},
+				{axis:"Career Chance", value:parseFloat(data[4].male) / parseFloat(data[8].male)},
+				{axis:"Interested", value:parseFloat(data[5].male) / parseFloat(data[8].male)},
+				{axis:"Future Study", value:parseFloat(data[6].male) / parseFloat(data[8].male)},
+				{axis:"Get Job", value:parseFloat(data[7].male) / parseFloat(data[8].male)}
 			],
 			[
-				{axis:"Enjoy Reading", value:parseFloat(data[0].female) / (parseFloat(data[0].female) + parseFloat(data[0].male))},
-				{axis:"Worthwhlie Work", value:parseFloat(data[1].female) / (parseFloat(data[1].female) + parseFloat(data[1].male))},
-				{axis:"Look Forward", value:parseFloat(data[2].female) / (parseFloat(data[2].female) + parseFloat(data[2].male))},
-				{axis:"Enjoy Math", value:parseFloat(data[3].female) / (parseFloat(data[3].female) + parseFloat(data[3].male))},
-				{axis:"Career Chance", value:parseFloat(data[4].female) / (parseFloat(data[4].female) + parseFloat(data[4].male))},
-				{axis:"Interested", value:parseFloat(data[5].female) / (parseFloat(data[5].female) + parseFloat(data[5].male))},
-				{axis:"Future Study", value:parseFloat(data[6].female) / (parseFloat(data[6].female) + parseFloat(data[6].male))},
-				{axis:"Get Job", value:parseFloat(data[7].female) / (parseFloat(data[7].female) + parseFloat(data[7].male))}
+				{axis:"Enjoy Reading", value:parseFloat(data[0].female) / parseFloat(data[8].female)},
+				{axis:"Worthwhlie Work", value:parseFloat(data[1].female) / parseFloat(data[8].female)},
+				{axis:"Look Forward", value:parseFloat(data[2].female) / parseFloat(data[8].female)},
+				{axis:"Enjoy Math", value:parseFloat(data[3].female) / parseFloat(data[8].female)},
+				{axis:"Career Chance", value:parseFloat(data[4].female) / parseFloat(data[8].female)},
+				{axis:"Interested", value:parseFloat(data[5].female) / parseFloat(data[8].female)},
+				{axis:"Future Study", value:parseFloat(data[6].female) / parseFloat(data[8].female)},
+				{axis:"Get Job", value:parseFloat(data[7].female) / parseFloat(data[8].female)}
 			]
 	]
 	return d
